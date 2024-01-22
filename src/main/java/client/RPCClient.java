@@ -1,13 +1,20 @@
 package client;
 
+import service.BlogService;
+import service.pojo.Blog;
 import service.pojo.User;
 import service.UserService;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+import java.util.Random;
+
 public class RPCClient {
-    public static void main(String[] args) {
-//        try {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
+//        try (Socket socket = new Socket("127.0.0.1", 8899)){
 //            // 建立Socket连接
-//            Socket socket = new Socket("127.0.0.1", 8899);
 //            ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
 //            ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
 //            // 传给服务器id
@@ -31,5 +38,10 @@ public class RPCClient {
             User user = User.builder().userName("张三").id(100).sex(true).build();
             Integer integer = proxy.insertUserId(user);
             System.out.println("向服务端插入数据："+integer);
+
+        // 客户中添加新的测试用例
+            BlogService blogService = clientProxy.getProxy(BlogService.class);
+            Blog blogById = blogService.getBlogById(100);
+            System.out.println("从服务端得到的blog为：" + blogById);
     }
 }
