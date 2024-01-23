@@ -1,5 +1,6 @@
 package server;
 
+import server.netty.NettyRPCServer;
 import service.BlogService;
 import service.UserService;
 import service.impl.BlogServiceImpl;
@@ -17,11 +18,11 @@ public class TestServer {
 //        serviceProvide.put("com.ganghuan.myRPCVersion2.service.UserService",userService);
 //        serviceProvide.put("com.ganghuan.myRPCVersion2.service.BlogService",blogService);
 
-        ServiceProvider serviceProvider = new ServiceProvider();
+        ServiceProvider serviceProvider = new ServiceProvider("127.0.0.1",8899);
         serviceProvider.provideServiceInterface(userService);
         serviceProvider.provideServiceInterface(blogService);
-        RPCServer RPCServer = new SimpleRPCRPCServer(serviceProvider);
-        RPCServer.start(8899);
+        RPCServer RPCServer = new NettyRPCServer(serviceProvider);
+//        RPCServer.start(8899);
     }
 }
 // 这里先不去讨论实现其中的细节，因为这里还应该进行优化，我们先去把服务端代码松耦合，再回过来讨论
