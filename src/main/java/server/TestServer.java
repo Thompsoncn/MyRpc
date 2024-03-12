@@ -22,7 +22,7 @@ public class TestServer {
         serviceProvider.provideServiceInterface(userService);
         serviceProvider.provideServiceInterface(blogService);
         RPCServer RPCServer = new NettyRPCServer(serviceProvider);
-//        RPCServer.start(8899);
+        RPCServer.start(8899);
     }
 }
 // 这里先不去讨论实现其中的细节，因为这里还应该进行优化，我们先去把服务端代码松耦合，再回过来讨论
